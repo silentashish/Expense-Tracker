@@ -9,8 +9,8 @@ const Empty = () => {
         justifyContent: 'center',
         flex: 1,
       }}>
-      <Text style={{color: '#ff4500', fontWeight: '700', fontSize: 20}}>
-        No transactions yet.
+      <Text style={{color: '#fff', fontWeight: '700', fontSize: 20}}>
+        No Transaction Yet
       </Text>
     </View>
   );

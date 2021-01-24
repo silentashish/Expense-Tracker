@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 // import {Button} from 'native-base';
 import {styles} from './styles';
 import LottieView from 'lottie-react-native';
-import {Button, Divider} from '../../Component';
+import {Button, Divider} from '../../Components';
 
 const secondaryColor = '#000';
 
@@ -14,11 +14,11 @@ export default (props) => {
       <View style={styles.centerElement}>
         <View>
           <Text style={[styles.bigText, {color: secondaryColor}]}>
-            Budget Book
+            Expense Tracker
           </Text>
           <Divider />
           <Text style={styles.instruction}>
-            Keep track your booking easily with Mobile Application
+            Keep track of your expense easily and see visualization of it
           </Text>
         </View>
 
@@ -31,7 +31,7 @@ export default (props) => {
           />
         </View>
 
-        <Button onPress={() => navigation.navigate('CardScreen')}>Start</Button>
+        <Button onPress={() => navigation.navigate('Home')}>Start</Button>
       </View>
     </View>
   );

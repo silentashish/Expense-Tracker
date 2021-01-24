@@ -8,8 +8,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {useSelector, useDispatch} from 'react-redux';
 import {deleteTransaction} from '../store/actions/transactionAction';
+import {styles} from './StartScreen/styles';
+import LinearGradient from 'react-native-linear-gradient';
+import Diagram from '../Components/Parts/Diagram';
 
-function Item({title, id, price}) {
+function Item({title, id, price, type}) {
   const dispatch = useDispatch();
 
   return (
@@ -17,7 +20,11 @@ function Item({title, id, price}) {
       style={{
         marginVertical: 3,
         paddingHorizontal: 30,
-        paddingVertical: 15,
+        paddingVertical: 5,
+        backgroundColor: '#fff',
+        width: '90%',
+        alignSelf: 'center',
+        borderRadius: 15,
       }}>
       <ListItem>
         <TouchableOpacity>
@@ -43,7 +50,7 @@ function Item({title, id, price}) {
               fontFamily: 'Lato-Bold',
               fontSize: 14,
               fontWeight: '400',
-              color: price > 0 ? '#009BFC' : '#ff4500',
+              color: type === 'income' ? '#32CD32' : '#ff4500',
             }}>
             {price > 0 ? `${price} $` : `${Math.abs(price)} $`}
           </Text>
@@ -53,11 +60,22 @@ function Item({title, id, price}) {
   );
 }
 
+const Header = ({title}) => {
+  return (
+    <View style={styles.headerContainer}>
+      <Text style={styles.txt}>{title ?? 'Expense Tracker'}</Text>
+    </View>
+  );
+};
+
+export {Header};
+
 const HomeScreen = ({navigation}) => {
   const {transactions} = useSelector((state) => state.transactions);
-  console.log(transactions);
+  console.log('Transaction is', transactions);
   return (
-    <Container>
+    <LinearGradient colors={['#bdc3c7', '#2c3e50']} style={styles.wholeView}>
+      <Header />
       <Animated.View
         style={{
           flex: 1,
@@ -66,22 +84,28 @@ const HomeScreen = ({navigation}) => {
           paddingVertical: 10,
         }}>
         <Card navigation={navigation} />
+        <Diagram />
       </Animated.View>
 
-      <View style={{flex: 1, marginTop: -240}}>
+      <View style={{flex: 1, marginTop: 80}}>
         {transactions.length > 0 ? (
           <FlatList
             keyExtractor={(item, index) => item.id}
             data={transactions}
             renderItem={({item}) => (
-              <Item title={item.title} price={item.price} id={item.id} />
+              <Item
+                title={item.title}
+                price={item.price}
+                id={item.id}
+                type={item.type}
+              />
             )}
           />
         ) : (
           <Empty />
         )}
       </View>
-    </Container>
+    </LinearGradient>
   );
 };
 

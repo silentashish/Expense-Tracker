@@ -8,18 +8,41 @@ const Balance = ({navigation}) => {
   const {transactions} = useSelector((state) => state.transactions);
 
   const prices = transactions.map((transaction) => transaction.price);
-  const totalPrice = prices.reduce((prev, cur) => (prev += cur), 0).toFixed(2);
 
-  const expense =
-    prices
-      .filter((price) => price < 0)
-      .reduce((prev, cur) => (prev += cur), 0)
-      .toFixed(2) * -1;
+  const totalPrice = () => {
+    let totalPrice = 0;
+    transactions.map((transactions) => {
+      if (transactions.type === 'income') {
+        totalPrice += transactions.price;
+      } else {
+        totalPrice -= transactions.price;
+      }
+    });
+    return totalPrice;
+  };
+
+  const income = () => {
+    let totalIncome = 0;
+    transactions.map((transactions) => {
+      if (transactions.type === 'income') {
+        totalIncome += transactions.price;
+      }
+    });
+    return totalIncome;
+  };
+
+  const expense = () => {
+    let totalexpense = 0;
+    transactions.map((transactions) => {
+      if (transactions.type === 'expense') {
+        totalexpense += transactions.price;
+      }
+    });
+    return totalexpense;
+  };
 
   return (
-    <LinearGradient
-      colors={['#FAAD3D', '#EFC90A', '#F1CB0C']}
-      style={styles.Box}>
+    <LinearGradient colors={['#4ECDC4', '#556270']} style={styles.Box}>
       <View
         style={{width: '70%', alignItems: 'flex-start', alignSelf: 'center'}}>
         <Text
@@ -38,41 +61,28 @@ const Balance = ({navigation}) => {
             color: '#fff',
             fontWeight: '700',
           }}>
-          {totalPrice} $
+          {totalPrice()} $
         </Text>
-
-        {/* <Text
-          style={{
-            marginTop: 67,
-            color: '#fff',
-            fontFamily: 'Lato-Regular',
-            fontSize: 18,
-            fontWeight: '700',
-          }}>
-          4234 **** **** 6533
-        </Text> */}
       </View>
 
       <View
         style={{
-          alignItems: 'flex-end',
+          alignItems: 'center',
           width: '30%',
+          height: '100%',
         }}>
-        {/* <Text style={{fontSize: 18, color: '#fff', fontWeight: '700'}}>
-          NGN
-        </Text> */}
         <View style={{flex: 1}}>
           <Button
-            rounded
             light
             style={{
-              padding: 10,
-              marginTop: 32,
-              borderWidth: 3,
+              padding: 7,
+              paddingHorizontal: 25,
+              borderWidth: 1,
               borderColor: '#fff',
-              backgroundColor: '#E10C62',
+              backgroundColor: '#19547b',
               alignItems: 'center',
               justifyContent: 'center',
+              borderRadius: 5,
             }}
             onPress={() => {
               navigation.navigate('Add');
@@ -96,9 +106,25 @@ const Balance = ({navigation}) => {
               color: '#fff',
               fontSize: 18,
               fontWeight: '700',
-              color: 'red',
             }}>
-            -{expense} $
+            {expense()} $
+          </Text>
+          <Text
+            style={{
+              marginTop: 17,
+              color: '#fff',
+              fontSize: 15,
+              fontWeight: '700',
+            }}>
+            Income
+          </Text>
+          <Text
+            style={{
+              color: '#fff',
+              fontSize: 18,
+              fontWeight: '700',
+            }}>
+            {income()} $
           </Text>
         </View>
       </View>

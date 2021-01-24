@@ -4,6 +4,9 @@ const secondaryColor = '#000';
 const primaryColor = '#e0f2f1';
 
 export const styles = ScaledSheet.create({
+  wholeView: {
+    flex: 1,
+  },
   InfoSection: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -109,5 +112,17 @@ export const styles = ScaledSheet.create({
   },
   widthLess: {
     maxWidth: '70%',
+  },
+  headerContainer: {
+    backgroundColor: '#19547b',
+    paddingVertical: 10,
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
+  },
+  txt: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#fff',
   },
 });
